@@ -1,10 +1,8 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { NextFunction, Response } from 'express';
 import mongoose from 'mongoose';
-
-import userRouter from './routes/usersRoutes';
-import cardRouter from './routes/cardsRoutes';
 import RequestWithUserRole from './models/request';
-import ExtError from './models/extendedError';
+import handleError from './middlwares/handleError';
+import routes from './routes';
 
 const { PORT = 3000, MONGO_URL = 'mongodb://localhost:27017/mestodb' } = process.env;
 
@@ -20,19 +18,8 @@ app.use((req: RequestWithUserRole, res: Response, next: NextFunction) => {
   next();
 });
 
-app.use(userRouter);
-app.use(cardRouter);
-app.use((err: ExtError, req: Request, res: Response, next: NextFunction) => {
-  const { statusCode = 500, message } = err;
-  res
-    .status(statusCode)
-    .send({
-      message: statusCode === 500
-        ? 'На сервере произошла ошибка'
-        : message,
-    });
-  next();
-});
+app.use(routes);
+app.use(handleError);
 
 async function connect() {
   try {

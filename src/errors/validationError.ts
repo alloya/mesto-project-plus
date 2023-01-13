@@ -3,8 +3,8 @@ import ExtError from '../models/extendedError';
 class ValidationError extends Error implements ExtError {
   statusCode;
 
-  constructor() {
-    super('Переданы некорректные данные при создании сущности');
+  constructor(message = 'Переданы некорректные данные при создании сущности') {
+    super(message);
     this.statusCode = 400;
   }
 }

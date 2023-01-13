@@ -1,13 +1,14 @@
-import { NextFunction } from 'express';
-import mongoose from 'mongoose';
-import ValidationError from '../errors/validationError';
+import { CustomHelpers } from 'joi';
+import validator from 'validator';
+import { Request, Response } from 'express';
 
-const handleError = (error: any, next: NextFunction) => {
-  if (error instanceof mongoose.Error.ValidationError) {
-    const newError = new ValidationError();
-    return next(newError);
+export const validateURL = (value: string, helpers: CustomHelpers) => {
+  if (validator.isURL(value)) {
+    return value;
   }
-  return next(error);
+  return helpers.error('any.invalid');
 };
 
-export default handleError;
+export const notExistingRoute = (req: Request, res: Response) => {
+  res.status(404).send('Запрос не найден');
+};
