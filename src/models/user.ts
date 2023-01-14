@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { validateURL } from '../utils/utils';
 
 interface IUser {
   name: String,
@@ -22,6 +23,7 @@ const userSchema = new mongoose.Schema<IUser>({
   avatar: {
     type: String,
     required: true,
+    validate: validateURL,
   },
 });
 

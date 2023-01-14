@@ -12,3 +12,5 @@ export const validateURL = (value: string, helpers: CustomHelpers) => {
 export const notExistingRoute = (req: Request, res: Response) => {
   res.status(404).send('Запрос не найден');
 };
+
+export const validateSchemaURL = (val: string) => validator.isURL(val);
