@@ -1,7 +1,7 @@
 import { CelebrateError } from 'celebrate';
 import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
-import ValidationError from '../errors/validationError';
+import { ValidationError } from '../errors';
 import ExtError from '../models/extendedError';
 
 // eslint-disable-next-line no-unused-vars

@@ -1,5 +1,5 @@
 import { celebrate, Joi } from 'celebrate';
-import { validateURL } from '../utils/utils';
+import { validateEmail, validateURL } from '../utils/utils';
 
 export const validateCreateCard = celebrate({
   body: {
@@ -33,6 +33,13 @@ export const validateCreateUser = celebrate({
       'string.max': 'Максимальная длина 200 символов',
       'any.required': 'Обязательное поле',
     }),
+    email: Joi.string().required().custom(validateEmail).messages({
+      'any.required': 'Обязательное поле',
+      'any.invalid': 'Некорректный email',
+    }),
+    password: Joi.string().required().messages({
+      'any.required': 'Обязательное поле',
+    }),
   },
 });
 
@@ -57,6 +64,19 @@ export const validatePatchAvatar = celebrate({
     avatar: Joi.string().required().custom(validateURL).messages({
       'any.required': 'Обязательное поле',
       'any.invalid': 'Некорректный URL',
+    }),
+  },
+});
+
+export const validateLogin = celebrate({
+  body: {
+    email: Joi.string().required().custom(validateEmail)
+      .messages({
+        'any.required': 'Обязательное поле',
+        'any.invalid': 'Некорректный email',
+      }),
+    password: Joi.string().required().messages({
+      'any.required': 'Обязательное поле',
     }),
   },
 });

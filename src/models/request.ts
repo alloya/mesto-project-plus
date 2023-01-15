@@ -1,11 +1,12 @@
 import { Request } from 'express';
 
-interface IDecode {
+interface IUserId {
   _id: string,
 }
 
-interface RequestWithUserRole extends Request {
-  user?: IDecode,
+interface RequestWithUser extends Request {
+  user?: IUserId,
+  token?: string,
 }
 
-export default RequestWithUserRole;
+export default RequestWithUser;
