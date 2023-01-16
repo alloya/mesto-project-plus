@@ -1,7 +1,7 @@
 import { CelebrateError } from 'celebrate';
 import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
-import { ValidationError } from '../errors';
+import { ConflictError, ValidationError } from '../errors';
 import ExtError from '../models/extendedError';
 
 // eslint-disable-next-line no-unused-vars
@@ -17,6 +17,12 @@ const handleError = (err: ExtError, req: Request, res: Response, _next: NextFunc
     const newError = new ValidationError('Некорректный id');
     return res.status(newError.statusCode).send(newError.message);
   }
+  if (err.name === 'MongoServerError') {
+    const newError = new ConflictError();
+    return res.status(newError.statusCode).send(newError.message);
+  }
+  console.log(err);
+
   const { statusCode = 500, message } = err;
   return res
     .status(statusCode)

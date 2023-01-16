@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { validateCreateCard } from '../middlwares/validations';
+import { validateCreateCard } from '../middlewares/validations';
 import {
   deleteCard, createCard, putLike, deleteLike, getCards,
 } from '../controllers/cardsController';
-import auth from '../middlwares/auth';
+import auth from '../middlewares/auth';
 
 const router = Router();
 

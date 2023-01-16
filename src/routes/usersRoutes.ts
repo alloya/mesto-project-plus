@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import {
-  validateCreateUser, validatePatchAvatar, validatePatchUser, validateLogin,
-} from '../middlwares/validations';
+  validatePatchAvatar, validatePatchUser,
+} from '../middlewares/validations';
 import {
-  createUser, getUser, getUsers, editUser, editAvatar, login, getCurrentUser,
+  getUser, getUsers, editUser, editAvatar, getCurrentUser,
 } from '../controllers/usersController';
-import auth from '../middlwares/auth';
+import auth from '../middlewares/auth';
 
 const router = Router();
 
@@ -14,7 +14,5 @@ router.get('/:userId', auth, getUser);
 router.get('/me', auth, getCurrentUser);
 router.patch('/me', auth, validatePatchUser, editUser);
 router.patch('/me/avatar', auth, validatePatchAvatar, editAvatar);
-router.post('/signin', validateLogin, login);
-router.post('/signup', validateCreateUser, createUser);
 
 export default router;

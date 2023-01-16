@@ -47,12 +47,13 @@ const userSchema = new Schema<IUser, UserModel>({
   password: {
     type: String,
     required: true,
+    select: false,
   },
 });
 
 // eslint-disable-next-line max-len
 userSchema.static('findUserByCredentials', async function findUserByCredentials(email: string, password: string) {
-  const user: IUser | null = await this.findOne({ email });
+  const user: IUser | null = await this.findOne({ email }).select('+password');
   if (!user) return new NotAuthorizedError();
   const match = await bcrypt.compare(password, user.password);
   if (match) {

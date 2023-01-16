@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import RequestWithUser from '../models/request';
 import Card from '../models/card';
-import handleError from '../middlwares/handleError';
+import handleError from '../middlewares/handleError';
 import NotFoundError from '../errors/notFoundError';
 import { ForbiddenError, NotAuthorizedError } from '../errors';
 
@@ -37,8 +37,6 @@ export const createCard = async (req: RequestWithUser, res: Response, next: Next
 
 export const deleteCard = async (req: RequestWithUser, res: Response, next: NextFunction) => {
   try {
-    console.log(req.user);
-
     if (!req.user || !req.user._id) {
       throw new NotAuthorizedError();
     }
