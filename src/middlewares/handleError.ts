@@ -21,8 +21,6 @@ const handleError = (err: ExtError, req: Request, res: Response, _next: NextFunc
     const newError = new ConflictError();
     return res.status(newError.statusCode).send(newError.message);
   }
-  console.log(err);
-
   const { statusCode = 500, message } = err;
   return res
     .status(statusCode)
